@@ -1,0 +1,16 @@
+[
+{
+  "modid": "foxelboxchat",
+  "name": "FoxelBox chat",
+  "description": "FoxelBox Chat mod",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Doridian"],
+  "credits": "Doridian and FoxelBox",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
