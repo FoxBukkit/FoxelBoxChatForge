@@ -55,13 +55,38 @@ public class Utils {
         return ret.toString();
     }
 
-    public static <T, E> void setPrivateValue(Class<? super T> instanceclass, T instance, String field, E value) {
+    public static <T, E> void setPrivateValueByType(Class<? super T> instanceclass, T instance, Class<?> fieldType, E value) {
+        try {
+            Field field = null;
+            for(Field f : instanceclass.getDeclaredFields()) {
+                if(fieldType.isAssignableFrom(f.getType())) {
+                    field = f;
+                    break;
+                }
+            }
+            if(field == null) {
+                throw new Exception("Not found");
+            }
+            setPrivateValue(instanceclass, instance, field, value);
+        } catch (Exception e) {
+            System.err.println("Could not set field of type \"" + fieldType + "\" of class \"" + instanceclass.getCanonicalName() + "\" because \"" + e.getMessage() + "\"");
+        }
+    }
+
+    public static <T, E> void setPrivateValueByName(Class<? super T> instanceclass, T instance, String field, E value) {
+        try {
+            setPrivateValue(instanceclass, instance, instanceclass.getDeclaredField(field), value);
+        } catch (Exception e) {
+            System.err.println("Could not set field \"" + field + "\" of class \"" + instanceclass.getCanonicalName() + "\" because \"" + e.getMessage() + "\"");
+        }
+    }
+
+    public static <T, E> void setPrivateValue(Class<? super T> instanceclass, T instance, Field f, E value) {
         try
         {
             Field field_modifiers = Field.class.getDeclaredField("modifiers");
             field_modifiers.setAccessible(true);
 
-            Field f = instanceclass.getDeclaredField(field);
             int modifiers = field_modifiers.getInt(f);
 
             if ((modifiers & Modifier.FINAL) != 0)
@@ -71,7 +96,7 @@ public class Utils {
             f.set(instance, value);
         }
         catch (Exception e) {
-            System.err.println("Could not set field \"" + field + "\" of class \"" + instanceclass.getCanonicalName() + "\" because \"" + e.getMessage() + "\"");
+            System.err.println("Could not set field \"" + f.getName() + "\" of class \"" + instanceclass.getCanonicalName() + "\" because \"" + e.getMessage() + "\"");
         }
     }
 }

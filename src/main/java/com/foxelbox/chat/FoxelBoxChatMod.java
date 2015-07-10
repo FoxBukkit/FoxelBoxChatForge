@@ -52,7 +52,7 @@ public class FoxelBoxChatMod
 
         final ICommandManager realManager = MinecraftServer.getServer().getCommandManager();
 
-        Utils.setPrivateValue(MinecraftServer.class, MinecraftServer.getServer(), "commandManager", new CommandHandler() {
+        Utils.setPrivateValueByType(MinecraftServer.class, MinecraftServer.getServer(), ICommandManager.class, new CommandHandler() {
             @Override
             public int executeCommand(ICommandSender sender, String rawCommand) {
                 if (sender instanceof EntityPlayerMP) {
