@@ -21,6 +21,9 @@ version = "1.0"
 group= "com.foxelbox.chat.foxbukkitchat" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "foxbukkitchat"
 
+targetCompatibility = "1.7"
+sourceCompatibility = "1.7"
+
 repositories {
     mavenCentral()
     maven {
